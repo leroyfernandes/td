@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TodoApp</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+	<link rel="stylesheet" href="app/css/app.css" />
+	<script type="text/javascript" src="app/js/jquery18.min.js"></script>
+	<script type="text/javascript" src="app/js/handlebars-1.0.0.beta.6.js"></script>
+	<script type="text/javascript" src="app/js/app.js"></script>
+	<script id="todo-item-template" type="text/x-handlebars-template">
+		{{#this}}
+		<li {{#if completed}}class="todo-item completed"{{else}}class="todo-item"{{/if}} {{#if archived}}class="todo-item completed archived"{{/if}} data-todo-id="{{id}}">
+			<div>
+				<a href="#" class="action complete"><i class="icon-ok"></i></a>
+				<p class="lead">{{text}}</p>
+				<a href="#" class="action delete"><i class="icon-remove"></i></a>
+				<a href="#" class="action archive "><i class="icon-folder-close"></i></a>
+				<div class="clearfix"></div>
+			</div>
+		</li>
+		{{/this}}
+	</script>
+
+</head>
+<body>
+	<div class="container">
+		<div id="todoApp" class="row">
+			<div id="header" class="span8">
+				<h1>Todo App</h1>
+				<button class="btn btn-mini btn-primary" type="button">Extended Info</button>
+				<button class="btn btn-mini btn-primary" type="button">Archived Info</button>
+			</div>
+			<div class="span8 newTodo">
+				<input id="newTodoText" type="text" class="span8" placeholder="Enter a todo item here">
+			</div>
+			<div class="span8">
+				<ul id="todo-list" class="unstyled">
+					<li class="todo-item" data-todo-id="">
+						<div>
+							<a href="#" class="action complete " ><i class="icon-ok"></i></a>
+							<p class="lead">This is a todo. This is a really long todo list item</p>
+							<a href="#" class="action delete "><i class="icon-remove"></i></a>
+							<a href="#" class="action archive "><i class="icon-folder-close"></i></a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+					<li class="todo-item completed" data-todo-id="">
+						<div>
+							<a href="#" class="action complete " ><i class="icon-ok"></i></a>
+							<p class="lead">This is a todo</p>
+							<a href="#" class="action delete " ><i class="icon-remove"></i></a>
+							<div class="clearfix"></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+
+#todoApp{
+}
+
+#header h1{
+	display: inline-block;
+}
+
+#header button{
+	float: right;
+	clear: right;
+	margin-top: 5px;
+}
+
+.newTodo{
+	width: 100%;
+	margin-top: 10px;
+}
+
+.todo-item{
+	line-height: 0;
+}
+
+.todo-item > div{
+	padding: 7px 0;
+	border-bottom: 1px solid #a2a2a2;
+}
+
+.todo-item a.action{
+	padding: 0 7px;
+	line-height: 2em;
+	margin-right: 10px;
+	opacity: 0.1;
+	transition: opacity .25s ease-in-out;
+   -moz-transition: opacity .25s ease-in-out;
+   -webkit-transition: opacity .25s ease-in-out; 
+}
+
+	.todo-item a.action:hover, .todo-item a.action:focus{
+		opacity: 1;
+	}
+
+	.todo-item a.complete{
+		float: left;
+	}
+	.todo-item a.delete{
+		float: right;
+	}
+	.todo-item a.archive{
+		float: right;
+		display: none;
+	}
+
+
+	.todo-item.completed a.complete{
+		opacity: 1;
+	}
+
+	.todo-item.completed a.archive{
+		display: inline-block;
+	}
+
+	.todo-item.completed p{
+		text-decoration: line-through;
+	}
+
+.todo-item p.lead{
+	float: left;
+	margin: 0;
+	width: 80%;
+}
+
+.todo-item input.modify{
+	width: 80%;
+	float: left;
+	margin-bottom: 0;
+}
