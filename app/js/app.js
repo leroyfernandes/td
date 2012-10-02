@@ -2,19 +2,23 @@ $(document).ready(function(){
 	'use strict';
 
 	var TodoApp = {
+		/* Generates a unique id for each todo */
 		generateUUID : function b( a ){
 			return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,b)
 		},
+		/* Interfaces with the localStorage API to retrieve the todo list */
 		getTodos : function(){
 			var todos = localStorage.getItem( '_todoApp' );
 			return ( todos && JSON.parse( todos ) ) || [];
 
 		},
+		/* Interfaces with the localStorage API to store the todo list */
 		setTodos : function( todos ){
 			localStorage.setItem ( '_todoApp', JSON.stringify( todos ) );
 			TodoApp.todos = TodoApp.getTodos();
 
 		},
+		/* Main function that sets up the app */
 		init : function(){
 			this.todoListTemplate = Handlebars.compile( $('#todo-item-template').html() );
 			this.todos = TodoApp.getTodos();
@@ -30,9 +34,11 @@ $(document).ready(function(){
 			$todoList.on('click', 'a.delete', this.deleteTodo );
 			$todoList.on('dblclick', 'p.lead', this.modifyTodo );
 		},
+		/* Renders the todo list */
 		outTodos : function(){
 			$('#todo-list').html( TodoApp.todoListTemplate( TodoApp.todos ) );
 		},
+		/* Create a new todo item */
 		createTodo : function( e ){
 			var $newTodo = $(this),
 				newTodoText = $.trim( $newTodo.val() ),
@@ -53,6 +59,7 @@ $(document).ready(function(){
 				TodoApp.outTodos();
 			}
 		},
+		/* Delete a new todo item - Cannot be undone */
 		deleteTodo : function(){
 			var $thisTodo = $(this),
 				$thisTodoLi = $thisTodo.closest('li.todo-item'),
@@ -62,13 +69,14 @@ $(document).ready(function(){
 			$.each( TodoApp.todos, function( i, todo ){
 				if ( todo.id === thisTodoId ) {
 					TodoApp.todos.splice( i , 1 );
+					TodoApp.setTodos( TodoApp.todos );
+					TodoApp.outTodos();
+					return false;
 				};
-
-				TodoApp.setTodos( TodoApp.todos );
-				TodoApp.outTodos();
 			})
 
 		},
+		/* Marks the current todo as complete */
 		completeTodo : function(){
 			var $thisTodo = $(this),
 				$thisTodoLi = $thisTodo.closest('li.todo-item'),
@@ -84,12 +92,14 @@ $(document).ready(function(){
 						TodoApp.todos[ i ].completed = false;
 						TodoApp.todos[ i ].completedOn = '';
 					}
-				};
+					TodoApp.setTodos( TodoApp.todos );
+					TodoApp.outTodos();
 
-				TodoApp.setTodos( TodoApp.todos );
-				TodoApp.outTodos();
+					return false;
+				};
 			})
 		},
+		/* Modify the text of the current todo */
 		modifyTodo : function(){
 			var $thisTodo = $(this),
 				$thisTodoLi = $thisTodo.closest('li.todo-item'),
@@ -116,7 +126,7 @@ $(document).ready(function(){
 								TodoApp.setTodos( TodoApp.todos );
 								TodoApp.outTodos();
 
-								return;
+								return false;
 							};
 						});
 					}
@@ -128,6 +138,8 @@ $(document).ready(function(){
 				});
 			}
 		},
+		/* Archive the todo item. Does not delete the todo but hides it in normal view
+		   The user can see archived todos in the Extended mode */
 		archiveTodo : function(){
 			/* To be developed: Allow the user to archive todo items. 
 			These items are hidden from view but will be shown in the Archived Info Mode */
@@ -143,4 +155,5 @@ Roadmap:
 2. Extended info mode
 3. Archived info mode
 4. Todo counter
+5. Completed todo moved to bottom
 */
