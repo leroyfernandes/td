@@ -88,9 +88,17 @@ $(document).ready(function(){
 					if( !isCompleted ){
 						TodoApp.todos[ i ].completed = true;
 						TodoApp.todos[ i ].completedOn = new Date();
+
+						/* Reposition completed todos to end of array */
+						TodoApp.todos.push( TodoApp.todos[ i ] );
+						TodoApp.todos.splice( i, 1 );
+						
 					} else{
 						TodoApp.todos[ i ].completed = false;
 						TodoApp.todos[ i ].completedOn = '';
+
+						/* TODO: Sort reactivated todos from the end of the array 
+						   to the beginning */
 					}
 					TodoApp.setTodos( TodoApp.todos );
 					TodoApp.outTodos();
